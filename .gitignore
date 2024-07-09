@@ -1,0 +1,15 @@
+*.conf
+*.log
+*.ini
+*.pdf
+*.exe
+log.csv
+
+!*_temp.conf
+!*_temp.log
+!*_temp.ini
+!*_temp.pdf
+!log_temp.csv
+
+!.gitignore
+!*.md
