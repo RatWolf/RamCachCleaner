@@ -1,5 +1,5 @@
 # Pfad zu RamMap.exe
-$ramMapPath = "C:\Program Files\Rammap\RamMap64.exe"
+$ramMapPath = Join-Path -Path $PSScriptRoot -ChildPath "RamMap64.exe"
 
 $memoryInfo = Get-CimInstance -ClassName Win32_PerfRawData_PerfOS_Memory
 
