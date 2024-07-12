@@ -4,3 +4,4 @@ RamCacheCleaner prüft, wieviel Ram gesamt vorhanden ist und wenn der wirklich f
 
 To-Do:
 - in die Prüfung mit aufnehmen ob der Standby überhaupt größer als 1gb / 5% ist da ansonsten eine endlosschleife entstehen könnte (wenn das programm automatisiert gestartet wird)
+- gitignore anpassen an tatsächlichen code, vermutlich ersatzlos streichbar. (aktuell platzhalter)
