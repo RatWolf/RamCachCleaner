@@ -4,9 +4,13 @@ RamCacheCleaner prüft, wieviel Ram gesamt vorhanden ist und wenn der wirklich f
 
 ## Versionen
 ![Static Badge](https://img.shields.io/badge/v2.x.x-green?style=for-the-badge)
+
 ![Static Badge](https://img.shields.io/badge/v2.0.0-green?style=social&label=umstellung%20von%20powershell%20auf%20python)
+
 ![Static Badge](https://img.shields.io/badge/v2.1.0-green?style=social&label=Bestehenden%20Ram%20zum%20ausrechnen%20genutzt)
+
 ![Static Badge](https://img.shields.io/badge/v2.1.1-green?style=social&label=Ram%20%25%20und%20Bruchteilig%20anahnd%20des%20genutzten%20Standby%20freigeben)
+
 ![Static Badge](https://img.shields.io/badge/v2.1.2-green?style=social&label=.exe%20inkl.%20.icon%20erstellt)
 
 ##To-Do
