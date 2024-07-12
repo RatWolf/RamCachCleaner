@@ -1,38 +1,40 @@
-import ctypes, psutil
-import win32com.client
+import ctypes, wmi
+
+# WMI-Verbindung initialisieren
+c = wmi.WMI()
+
+# Abfrage der Win32_PerfRawData_PerfOS_Memory Klasse
+memory_info = c.Win32_PerfRawData_PerfOS_Memory()[0]
 
 # Umrechnungsfaktor von Bytes zu Gigabytes
 bytes_to_gb = 1024 ** 3
 
-# Verfügbarer Speicher in GB
-free_memory_gb = round(psutil.virtual_memory().available / bytes_to_gb, 2)
+# Berechnung des wirklich freien Speichers
+available_bytes = float(memory_info.AvailableBytes)
+standby_cache_reserve_bytes = float(memory_info.StandbyCacheReserveBytes)
+standby_cache_normal_priority_bytes = float(memory_info.StandbyCacheNormalPriorityBytes)
+standby_cache_core_bytes = float(memory_info.StandbyCacheCoreBytes)
 
-# Standby-Speicher für Windows ermitteln
-def get_standby_memory_gb():
-    strComputer = "."
-    objWMIService = win32com.client.Dispatch("WbemScripting.SWbemLocator")
-    objSWbemServices = objWMIService.ConnectServer(strComputer,"root\cimv2")
-    colItems = objSWbemServices.ExecQuery("Select * from Win32_PerfRawData_PerfOS_Memory")
-    for objItem in colItems:
-        standby_bytes = objItem.StandbyCacheReserveBytes + objItem.StandbyCacheNormalPriorityBytes + objItem.StandbyCacheCoreBytes
-        return round(standby_bytes / bytes_to_gb, 2)
-    return 0
+# Berechnung des gesamten Standby-Cache-Speichers
+total_standby_cache_bytes = standby_cache_reserve_bytes + standby_cache_normal_priority_bytes + standby_cache_core_bytes
 
-standby_memory_gb = get_standby_memory_gb()
+# Wirklich freier Speicher
+real_free_memory_gb = round((available_bytes - total_standby_cache_bytes) / bytes_to_gb, 2)
 
-# Unbenutzter Speicher in GB
-unused_memory_gb = free_memory_gb - standby_memory_gb
+# Gesamter Cache-Speicher
+total_cache_memory_gb = round(total_standby_cache_bytes / bytes_to_gb, 2)
 
-print(f"Freier Speicher: {free_memory_gb} GB")
-print(f"Standby-Speicher: {standby_memory_gb} GB")
-print(f"Unbenutzter Speicher: {unused_memory_gb} GB")
-
-def allocate_and_free_memory(size_in_mb):
-    size = size_in_mb * 1024 * 1024  # Umrechnung von MB in Bytes
+def allocate_and_free_memory(size_in_gb):
+    size = size_in_mb * (1024 ** 3)  # Umrechnung von GB in Bytes
 
     buffer = ctypes.create_string_buffer(size)
 
-    print(f"{size_in_mb} MB Speicher wurden zugewiesen und werden automatisch freigegeben.")
+    print(f"{size_in_gb} GB Speicher wurden zugewiesen und werden automatisch freigegeben.")
 
 if __name__ == '__main__':
-    allocate_and_free_memory(1024)  # 1024 MB Speicher allokieren und freigeben
+    print(f"Wirklich freier Speicher: {real_free_memory_gb} GB")
+    print(f"Gesamter Cache-Speicher: {total_cache_memory_gb} GB")
+    print(f"Halber Cache-Speicher: {total_cache_memory_gb / 4} GB")
+
+    if real_free_memory_gb < 1:
+        allocate_and_free_memory(1)  # 1 GB Speicher allokieren und freigeben
