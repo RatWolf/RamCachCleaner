@@ -31,7 +31,9 @@ Write-Host "Standby RAM: $standbyMemoryGB GB"
 # Wenn Unused Memory unter 1GB liegt, Standby Speicher leeren
 if ($unusedMemoryGB -lt 1) {
     Write-Host "Unused RAM ist unter 1GB. Leere Standby Speicher..."
-    & $ramMapPath -Ew -Es -Em -Et -E0
+    # & $ramMapPath -Ew -Es -Em -Et -E0
+    & $ramMapPath -Et
+    & $ramMapPath -E0
     Write-Host "Standby Speicher geleert."
 } else {
     Write-Host "Unused RAM ist über 1GB. Keine Aktion erforderlich."
