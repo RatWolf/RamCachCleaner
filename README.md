@@ -13,5 +13,7 @@ RamCacheCleaner prüft, wieviel Ram gesamt vorhanden ist und wenn der wirklich f
 
 ![Static Badge](https://img.shields.io/badge/v2.1.2-green?style=social&label=.exe%20inkl.%20.icon%20erstellt)
 
+![Static Badge](https://img.shields.io/badge/v2.2.0-green?style=social&label=Bedingung%20für%20Speicherfreigabe%20hinzugefügt)
+
 ## To-Do
-- in die Prüfung mit aufnehmen ob der Standby überhaupt größer als 1gb / 5% ist da ansonsten eine endlosschleife entstehen könnte (wenn das programm automatisiert gestartet wird)
+- 
